@@ -2,7 +2,7 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import * as schema from "./schema";
 
-// Singleton pattern — jeden pool na całą aplikację
+// Singleton pattern jeden pool na całą aplikację
 const globalForDb = globalThis as unknown as {
   pool: Pool | undefined;
 };
