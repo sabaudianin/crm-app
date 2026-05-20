@@ -20,7 +20,7 @@ export const auth = betterAuth({
 
   emailAndPassword: {
     enabled: true,
-    requireEmailVerification: false, // włącz na produkcji z emailem
+    requireEmailVerification: false, // na produkcji z emailem
     minPasswordLength: 8,
   },
 
