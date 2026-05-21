@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function proxy(request: NextRequest): Promise<NextResponse> {
   const { pathname } = request.nextUrl;
 
-  // Redirect root → /dashboard
+  // Redirect root  /dashboard
   if (pathname === "/") {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
