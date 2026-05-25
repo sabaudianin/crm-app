@@ -24,3 +24,20 @@ export const registerSchema = z
   });
 
 export type RegisterValues = z.infer<typeof registerSchema>;
+
+export const onboardingSchema = z.object({
+  name: z
+    .string()
+    .min(2, "Name must have minimum 2 digits")
+    .max(50, "Name can be maximum 50 digits"),
+  slug: z
+    .string()
+    .min(2, "Slug have to be minimum 2 digits")
+    .max(50, "Slug have to be maximum 50 digitsw")
+    .regex(
+      /^[a-z0-9-]+$/,
+      "Slug can only contain small letters, numbers and commas",
+    ),
+});
+
+export type OnboardingValues = z.infer<typeof onboardingSchema>;

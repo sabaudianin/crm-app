@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Building2 } from "lucide-react";
@@ -19,23 +19,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import type { OnboardingValues } from "@/lib/validations";
+import { onboardingSchema } from "@/lib/validations";
 
-const onboardingSchema = z.object({
-    name: z
-        .string()
-        .min(2, "Nazwa musi mieć minimum 2 znaki")
-        .max(50, "Nazwa może mieć maksymalnie 50 znaków"),
-    slug: z
-        .string()
-        .min(2, "Slug musi mieć minimum 2 znaki")
-        .max(50, "Slug może mieć maksymalnie 50 znaków")
-        .regex(
-            /^[a-z0-9-]+$/,
-            "Slug może zawierać tylko małe litery, cyfry i myślniki"
-        ),
-});
-
-type OnboardingValues = z.infer<typeof onboardingSchema>;
 
 function toSlug(name: string) {
     return name
@@ -47,6 +33,7 @@ function toSlug(name: string) {
 }
 
 export default function OnboardingPage() {
+
     const router = useRouter();
 
     const form = useForm<OnboardingValues>({
@@ -73,14 +60,14 @@ export default function OnboardingPage() {
 
         if (error) {
             if (error.message?.includes("slug")) {
-                form.setError("slug", { message: "Ten slug jest już zajęty" });
+                form.setError("slug", { message: "This slug is already taken" });
                 return;
             }
-            toast.error(error.message ?? "Błąd podczas tworzenia organizacji");
+            toast.error(error.message ?? "Error during creating organistaion");
             return;
         }
 
-        toast.success(`Workspace "${values.name}" został utworzony!`);
+        toast.success(`Workspace "${values.name}" has been created!`);
         router.push("/dashboard");
         router.refresh();
     }
@@ -94,11 +81,10 @@ export default function OnboardingPage() {
                     </div>
                 </div>
                 <h1 className="text-2xl font-semibold tracking-tight">
-                    Stwórz swój workspace
+                    Create your workspace
                 </h1>
                 <p className="text-sm text-muted-foreground">
-                    Workspace to przestrzeń dla Twojego zespołu. Możesz go później
-                    przemianować.
+                    Workspace is space for your team. later You can edit it.
                 </p>
             </div>
 
@@ -109,7 +95,7 @@ export default function OnboardingPage() {
                         name="name"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Nazwa firmy / zespołu</FormLabel>
+                                <FormLabel>Name of team</FormLabel>
                                 <FormControl>
                                     <Input
                                         placeholder="Acme Inc."
@@ -141,7 +127,7 @@ export default function OnboardingPage() {
                                     </div>
                                 </FormControl>
                                 <FormDescription>
-                                    Tylko małe litery, cyfry i myślniki
+                                    Only small lettres , numbers and comas
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>
@@ -154,8 +140,8 @@ export default function OnboardingPage() {
                         disabled={form.formState.isSubmitting}
                     >
                         {form.formState.isSubmitting
-                            ? "Tworzenie workspace..."
-                            : "Stwórz workspace i przejdź dalej →"}
+                            ? "Creating worksapce..."
+                            : "Create workspace"}
                     </Button>
                 </form>
             </Form>
