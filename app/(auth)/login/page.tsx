@@ -7,6 +7,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { toast } from "sonner";
 import { signIn } from "@/lib/auth-client";
+import { loginSchema } from "@/lib/validations";
+import type { LoginValues } from "@/lib/validations";
+
 
 import {
     Form,
@@ -19,12 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-const loginSchema = z.object({
-    email: z.string().email("Podaj poprawny adres email"),
-    password: z.string().min(8, "Hasło musi mieć minimum 8 znaków"),
-});
 
-type LoginValues = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
     const router = useRouter();
@@ -43,9 +41,9 @@ export default function LoginPage() {
         });
 
         if (error) {
-            toast.error("Nieprawidłowy email lub hasło");
+            toast.error("Invalid email or password");
             form.setError("email", { message: " " });
-            form.setError("password", { message: "Nieprawidłowy email lub hasło" });
+            form.setError("password", { message: "Invalid email or password" });
             return;
         }
 
@@ -57,15 +55,15 @@ export default function LoginPage() {
         <div className="space-y-6">
             <div className="space-y-1 text-center">
                 <h1 className="text-2xl font-semibold tracking-tight">
-                    Witaj z powrotem
+                    Welcome back
                 </h1>
                 <p className="text-sm text-muted-foreground">
-                    Nie masz konta?{" "}
+                    Dont have account?{" "}
                     <Link
                         href="/register"
                         className="text-foreground underline underline-offset-4 hover:text-primary transition-colors"
                     >
-                        Zarejestruj się
+                        Register
                     </Link>
                 </p>
             </div>
@@ -81,7 +79,7 @@ export default function LoginPage() {
                                 <FormControl>
                                     <Input
                                         type="email"
-                                        placeholder="jan@firma.pl"
+                                        placeholder="youremail@mail.com"
                                         autoComplete="email"
                                         {...field}
                                     />
@@ -97,7 +95,7 @@ export default function LoginPage() {
                         render={({ field }) => (
                             <FormItem>
                                 <div className="flex items-center justify-between">
-                                    <FormLabel>Hasło</FormLabel>
+                                    <FormLabel>Password</FormLabel>
                                 </div>
                                 <FormControl>
                                     <Input
@@ -117,7 +115,7 @@ export default function LoginPage() {
                         className="w-full"
                         disabled={form.formState.isSubmitting}
                     >
-                        {form.formState.isSubmitting ? "Logowanie..." : "Zaloguj się"}
+                        {form.formState.isSubmitting ? "Loging..." : "Log in"}
                     </Button>
                 </form>
             </Form>
