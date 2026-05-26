@@ -35,3 +35,12 @@ export async function requireGuest() {
     redirect("/dashboard");
   }
 }
+/*Wymagaz alogowanego usera z aktywna organizacją */
+export async function requireOrganization() {
+  const session = await requireSession();
+
+  if (!session.session.activeOrganizationId) {
+    redirect("/onboarding");
+  }
+  return session;
+}

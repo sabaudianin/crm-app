@@ -1,15 +1,20 @@
 import { requireGuest } from "@/lib/auth-session";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export default async function AuthLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    await requireGuest();
+    // await requireGuest();
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
 
     return (
         <div className="min-h-screen grid lg:grid-cols-2">
-
             <div className="hidden lg:flex flex-col justify-between bg-zinc-900 p-10 text-white">
                 <div className="flex items-center gap-2 font-semibold text-lg">
                     <div className="size-7 rounded-md bg-indigo-500 flex items-center justify-center text-white text-sm font-bold">
