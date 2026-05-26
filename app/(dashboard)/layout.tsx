@@ -1,4 +1,4 @@
-import { requireSession } from "@/lib/auth-session";
+import { requireOrganization } from "@/lib/auth-session";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import { AppHeader } from "@/components/layout/app-header";
@@ -8,7 +8,7 @@ export default async function DashboardLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const session = await requireSession();
+    const session = await requireOrganization();
 
     return (
         <SidebarProvider>
