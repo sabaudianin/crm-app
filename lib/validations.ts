@@ -41,3 +41,25 @@ export const onboardingSchema = z.object({
 });
 
 export type OnboardingValues = z.infer<typeof onboardingSchema>;
+
+export const contactSchema = z.object({
+  firstName: z.string().min(1, "Name is required").max(50),
+  lastName: z.string().max(50).optional().or(z.literal("")),
+  email: z
+    .string()
+    .email("Please enter a valid email address")
+    .optional()
+    .or(z.literal("")),
+  phone: z.string().max(20).optional().or(z.literal("")),
+  company: z.string().max(100).optional().or(z.literal("")),
+  position: z.string().max(100).optional().or(z.literal("")),
+  website: z
+    .string()
+    .url("Please enter valid URL")
+    .optional()
+    .or(z.literal("")),
+  status: z.enum(["lead", "prospect", "customer", "churned"]).default("lead"),
+  notes: z.string().max(2000).optional().or(z.literal("")),
+});
+
+export type ContactFormValues = z.infer<typeof contactSchema>;

@@ -4,7 +4,7 @@ import { contacts, deals, activities } from "@/lib/db/schema";
 import { eq, desc, count, and } from "drizzle-orm";
 import { Users, Kanban, TrendingUp, Target } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ActivityFeed } from "@/components/dashboard/activity-feed";
+import { ActivityFeed } from "@/components/dashboard/activity-feed/activity-feed";
 import { formatDistanceToNow } from "@/lib/utils";
 
 async function getDashboardData(organizationId: string) {
@@ -57,25 +57,25 @@ async function getDashboardData(organizationId: string) {
 const stats = [
     {
         key: "totalContacts" as const,
-        label: "Kontakty",
+        label: "Contacts",
         icon: Users,
-        description: "Łączna liczba kontaktów",
+        description: "Amount of contacts",
         color: "text-blue-600",
         bg: "bg-blue-50",
     },
     {
         key: "totalDeals" as const,
-        label: "Deale",
+        label: "Deals",
         icon: Kanban,
-        description: "Aktywne w pipeline",
+        description: "Active in pipeline",
         color: "text-violet-600",
         bg: "bg-violet-50",
     },
     {
         key: "wonDeals" as const,
-        label: "Wygrane",
+        label: "Won",
         icon: Target,
-        description: "Zamknięte pomyślnie",
+        description: "Closed sucessfully",
         color: "text-green-600",
         bg: "bg-green-50",
     },
@@ -97,7 +97,7 @@ export default async function DashboardPage() {
             <div>
                 <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
                 <p className="text-sm text-muted-foreground mt-1">
-                    Witaj z powrotem, {session.user.name.split(" ")[0]}
+                    Welcome back, {session.user.name.split(" ")[0]}
                 </p>
             </div>
 
@@ -135,7 +135,7 @@ export default async function DashboardPage() {
                     <CardContent>
                         <div className="text-2xl font-bold">{winRate}%</div>
                         <p className="text-xs text-muted-foreground mt-1">
-                            Skuteczność zamykania dealów
+                            Efficient
                         </p>
                     </CardContent>
                 </Card>
